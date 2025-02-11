@@ -15,9 +15,7 @@ export default function TodoList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState<string>('');
 
-  useEffect(() => {
-    setLoading(true);
-  
+  const fetchTasks = async () => {
     axios
       .get(`${import.meta.env.VITE_BE_DOMAIN_NAME}/api/${userID}/tasks`) //with credentials
       .then((response) => {
@@ -27,30 +25,29 @@ export default function TodoList() {
       .catch(() => {
         setError('Error fetching tasks.');
       })
-      .finally(() => {
-        setLoading(false);
-      });
+  }
+
+  useEffect(() => {
+
+    fetchTasks();
+    
   }, []);
 
 
 
   const addTask = async (userID: string) => {
-    // if (newTask.trim() !== '') {
-    //   const newTaskObj: Task = {
-    //     id: Date.now(),
-    //     text: newTask,
-    //     completed: false,
-    //   };
-    //   setTasks([...tasks, newTaskObj]);
-    //   setNewTask('');
-    // }
-
-    await axios
+    try {
+      await axios
       .post(`${import.meta.env.VITE_BE_DOMAIN_NAME}/api/${userID}/tasks`, {
         id: Date.now(),
         text: newTask,
         completed: false
       })
+
+      await fetchTasks();
+    } catch (error) {
+      console.error('Error creating task:', error);
+    }
   };
 
   const toggleCompletion = (taskId: number): void => {
@@ -61,26 +58,31 @@ export default function TodoList() {
     );
   };
 
-  const deleteTask = async (taskId: number) => {
-    // setTasks(tasks.filter((task) => task.id !== taskId));
-    
-    await axios
+  const deleteTask = async (taskId: number) => {    
+    try {
+      await axios
       .delete(`${import.meta.env.VITE_BE_DOMAIN_NAME}/api/${userID}/tasks/${taskId}`) //with credentials
-
-    
+      await fetchTasks();
+    } catch (error) {
+      console.error('Error deleting task:', error);
+    }
   }
     
 
   const updateTask = async(taskId: number) => {
-    // const objIndex = tasks.findIndex(obj => obj.id == taskId);
-
-    await axios
+    try {
+      await axios
       .put(`${import.meta.env.VITE_BE_DOMAIN_NAME}/api/${userID}/tasks/${taskId}`, {
         text: newTask, //from a textfield
       }) //with credentials
+      await fetchTasks();
+    } catch (error) {
+      console.error('Error updating task:', error);
+    }
   }
 
   return (
+    // not finished
     <div style={{ maxWidth: '500px', margin: '0 auto', padding: '20px' }}>
       <h1>{listTitle}</h1>
 
