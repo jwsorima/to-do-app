@@ -1,7 +1,9 @@
-To run the code, make sure you have Node.js installed; then enter npm install or npm i on the command line.
+## Install
+To run the code, make sure you have Node.js installed; then enter <code>npm install</code> or <code>npm i</code> on the command line.
 
-Create a copy of the .env-example file called .env.
+## Set environment variables
+Create a copy of the <code>.env-example</code> file called <code>.env</code>.
 
-Run the server
-1. Run npm run dev
-1. View the To-Do application at localhost:5173.
+## Run the server
+1. Enter <code>npm run dev</code> in the command line
+2. View the To-Do application at <code>localhost:5173</code>.
