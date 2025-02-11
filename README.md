@@ -1,5 +1,5 @@
 ## Install
-To run the code, make sure you have Node.js installed; then enter <code>npm install</code> or <code>npm i</code> on the command line.
+To run the code, make sure you have [Node.js](https://nodejs.org/en/download) installed; then enter <code>npm install</code> or <code>npm i</code> on the command line.
 
 ## Set environment variables
 Create a copy of the <code>.env-example</code> file called <code>.env</code>.
